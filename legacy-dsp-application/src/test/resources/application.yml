@@ -1,0 +1,12 @@
+spring:
+  jpa:
+    legacy-ad:
+      hikari:
+        jdbc-url: jdbc:h2:mem:test
+        username: test
+        password: test
+      properties:
+        hibernate:
+          hbm2ddl.auto: update
+          show_sql: true
+          physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
