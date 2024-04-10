@@ -18,3 +18,13 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: localpw
+  fastcampus-rabbitmq:
+    image: rabbitmq:3.13.0-management
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: ruser
+      RABBITMQ_DEFAULT_PASS: localpw
+      RABBITMQ_DEFAULT_VHOST: legacy
