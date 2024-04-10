@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "text": "꽃배달",
-  "adGroupId": 2
+  "adGroupId": 1
 }
 
 ### keyword 조회

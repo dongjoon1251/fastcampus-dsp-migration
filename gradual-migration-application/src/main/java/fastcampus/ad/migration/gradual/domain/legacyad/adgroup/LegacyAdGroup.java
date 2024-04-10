@@ -1,6 +1,7 @@
 package fastcampus.ad.migration.gradual.domain.legacyad.adgroup;
 
 
+import fastcampus.ad.migration.gradual.domain.legacyad.DeletableEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class LegacyAdGroup {
+public class LegacyAdGroup implements DeletableEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
