@@ -1,0 +1,35 @@
+### campaign 생성
+POST http://localhost:8080/campaign/v1
+Content-Type: application/json
+
+{
+  "name": "캠페인",
+  "userId": 1,
+  "budget": 100
+}
+
+### campaign 조회
+GET http://localhost:8080/campaign/v1/1
+Content-Type: application/json
+
+### campaign name 변경
+PATCH http://localhost:8080/campaign/v1/name
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "새캠페인"
+}
+
+### campaign budget 변경
+PATCH http://localhost:8080/campaign/v1/budget
+Content-Type: application/json
+
+{
+  "id": 1,
+  "budget": 1000
+}
+
+### campaign 삭제
+DELETE http://localhost:8080/campaign/v1/1
+Content-Type: application/json

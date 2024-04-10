@@ -1,0 +1,35 @@
+### adGroup 생성
+POST http://localhost:8080/adgroup/v1
+Content-Type: application/json
+
+{
+  "name": "광고그룹",
+  "campaignId": 1,
+  "linkUrl": "http://www.ad.com"
+}
+
+### adGroup 조회
+GET http://localhost:8080/adgroup/v1/1
+Content-Type: application/json
+
+### adGroup name 변경
+PATCH http://localhost:8080/adgroup/v1/name
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "새광고그룹"
+}
+
+### adGroup linkUrl 변경
+PATCH http://localhost:8080/adgroup/v1/linkUrl
+Content-Type: application/json
+
+{
+  "id": 1,
+  "linkUrl": "https://www.fastcampus1.com"
+}
+
+### adGroup 삭제
+DELETE http://localhost:8080/adgroup/v1/1
+Content-Type: application/json
