@@ -20,7 +20,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableJpaRepositories(
-    basePackages = "fastcampus.ad.migration.domain.recentad",
+    basePackages = {"fastcampus.ad.migration.domain.recentad",
+        "fastcampus.ad.migration.domain.migration"},
     entityManagerFactoryRef = "recentAdEntityManagerFactory",
     transactionManagerRef = "recentAdTransactionManager"
 )
@@ -48,7 +49,8 @@ public class RecentAdJpaConfig {
       @Qualifier("recentAdJpaProperties") Properties jpaProperties) {
     LocalContainerEntityManagerFactoryBean factoryBean = builder
         .dataSource(dataSource)
-        .packages("fastcampus.ad.migration.domain.recentad")
+        .packages("fastcampus.ad.migration.domain.recentad",
+            "fastcampus.ad.migration.domain.migration")
         .build();
     factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
     factoryBean.setJpaProperties(jpaProperties);
