@@ -1,0 +1,8 @@
+### 마이그레이션 동의
+POST http://localhost:8082/migration/v1/user/1/agree
+Content-Type: application/json
+
+
+### 마이그레이션에 동의한 사용자 조회
+GET http://localhost:8082/migration/v1/user/1
+Content-Type: application/json

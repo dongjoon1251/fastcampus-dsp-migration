@@ -1,8 +1,9 @@
-### 마이그레이션 동의
-POST http://localhost:8082/migration/v1/user/1/agree
+### 단건 재처리
+PUT http://localhost:8082/migration/v1/retry
 Content-Type: application/json
 
-
-### 마이그레이션에 동의한 사용자 조회
-GET http://localhost:8082/migration/v1/user/1
-Content-Type: application/json
+{
+  "userId": 1,
+  "aggregateId": 3,
+  "aggregateType": "KEYWORD"
+}
