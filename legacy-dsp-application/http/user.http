@@ -7,7 +7,7 @@ Content-Type: application/json
 }
 
 ### user 조회
-GET http://localhost:8080/user/v1/1
+GET http://localhost:8080/user/v1/2
 Content-Type: application/json
 
 ### user 이름 변경
@@ -15,7 +15,7 @@ PATCH http://localhost:8080/user/v1/name
 Content-Type: application/json
 
 {
-  "id": 1,
+  "id": 2,
   "name": "newName"
 }
 

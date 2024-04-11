@@ -29,4 +29,8 @@ public class MigrationUserService {
   public MigrationUserResult findById(Long userId) {
     return MigrationUserResult.from(find(userId));
   }
+
+  public boolean isDisagreed(Long migrationUserId) {
+    return repository.findById(migrationUserId).isEmpty();
+  }
 }
