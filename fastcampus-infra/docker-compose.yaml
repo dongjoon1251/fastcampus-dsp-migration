@@ -28,3 +28,28 @@ services:
       RABBITMQ_DEFAULT_USER: ruser
       RABBITMQ_DEFAULT_PASS: localpw
       RABBITMQ_DEFAULT_VHOST: legacy
+  fastcampus-kafka:
+    image: bitnami/kafka:3.4.1
+    ports:
+      - '9194:9194'
+    restart: always
+    environment:
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@localhost:9193
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9192,CONTROLLER://:9193,EXTERNAL://:9194
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://fastcampus-kafka:9192,EXTERNAL://localhost:9194
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+  fastcampus-kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: fastcampus-kafka-ui
+    ports:
+      - "7081:8080"
+    restart: always
+    depends_on:
+      - fastcampus-kafka
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=fastcampus-local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=fastcampus-kafka:9192
