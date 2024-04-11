@@ -12,6 +12,11 @@ spring:
         maximum-pool-size: 100
   cloud:
     stream:
+      kafka:
+        bindings:
+          migrationUserConsumer-in-0:
+            consumer:
+              startOffset: latest
       binders:
         migration-kafka:
           type: kafka
@@ -23,6 +28,11 @@ spring:
               auto-create-topics: true
               auto-add-partitions: true
               min-partition-count: 4
+      bindings:
+        migrationUserConsumer-in-0:
+          binder: migration-kafka
+          destination: migration-user-topic
+          group: batch-migration
 
 logging:
   file:
