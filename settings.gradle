@@ -3,4 +3,5 @@ include 'legacy-dsp-application'
 include 'gradual-migration-application'
 include 'migration-service'
 include 'internal-migration-application'
+include 'batch-migration-application'
 

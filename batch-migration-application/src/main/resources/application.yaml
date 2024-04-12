@@ -1,0 +1,29 @@
+server:
+  port: 8083
+spring:
+  profiles:
+    include: migration
+  jpa:
+    legacy-ad:
+      hikari:
+        maximum-pool-size: 100
+    recent-ad:
+      hikari:
+        maximum-pool-size: 100
+  cloud:
+    stream:
+      binders:
+        migration-kafka:
+          type: kafka
+          environment:
+            spring.cloud.stream.kafka.binder:
+              brokers: localhost
+              defaultBrokerPort: 9194
+              replication-factor: 1
+              auto-create-topics: true
+              auto-add-partitions: true
+              min-partition-count: 4
+
+logging:
+  file:
+    name: logs/batch.log
