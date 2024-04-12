@@ -48,8 +48,10 @@ public class MigrationUser extends AbstractAggregateRoot<MigrationUser> {
   }
 
   public void retry() {
-    prevStatus = status;
-    status = MigrationUserStatus.RETRIED;
+    if (!MigrationUserStatus.RETRIED.equals(status)) {
+      prevStatus = status;
+      status = MigrationUserStatus.RETRIED;
+    }
     updateAt = LocalDateTime.now();
     registerEvent(new MigrationRetriedEvent(this));
   }

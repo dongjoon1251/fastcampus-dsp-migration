@@ -40,7 +40,7 @@ public abstract class PageLegacyMigrationService<P extends PageMigration<P>, Leg
 
   protected abstract P firstPageMigration(Long userId, boolean isSuccess, Page<Legacy> legacyPage);
 
-  private Page<Legacy> findPage(Long userId, Integer pageNumber) {
+  protected Page<Legacy> findPage(Long userId, Integer pageNumber) {
     return legacyPageableRepository.findAllByUserIdAndDeletedAtIsNullOrderById(userId,
         PageRequest.of(pageNumber, PAGE_SIZE));
   }

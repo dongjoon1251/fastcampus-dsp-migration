@@ -1,6 +1,6 @@
 package fastcampus.ad.migration.batch.application.message;
 
-import fastcampus.ad.migration.application.dispatcher.PageMigrationDispatcher;
+import fastcampus.ad.migration.application.dispatcher.ParentPageMigrationDispatcher;
 import fastcampus.ad.migration.application.user.MigrationUserService;
 import fastcampus.ad.migration.application.user.StartMigrationFailedException;
 import fastcampus.ad.migration.domain.AggregateType;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class MigrationMessageProcessor {
 
   private final MigrationUserService migrationUserService;
-  private final PageMigrationDispatcher pageMigrationDispatcher;
+  private final ParentPageMigrationDispatcher parentPageMigrationDispatcher;
 
   @Async
   public void progressMigration(MigrationUserStatus prevStatus, MigrationUserStatus status,
@@ -56,6 +56,6 @@ public class MigrationMessageProcessor {
   }
 
   private void dispatch(Long userId, AggregateType aggregateType) {
-    pageMigrationDispatcher.dispatch(userId, aggregateType);
+    parentPageMigrationDispatcher.dispatch(userId, aggregateType);
   }
 }

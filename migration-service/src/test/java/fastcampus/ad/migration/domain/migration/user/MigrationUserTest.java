@@ -44,4 +44,19 @@ class MigrationUserTest {
         () -> assertThat(user.getStatus()).isEqualTo(MigrationUserStatus.USER_FINISHED.next()),
         () -> assertThat(user.getPrevStatus()).isEqualTo(MigrationUserStatus.USER_FINISHED));
   }
+
+  @Test
+  void 이미_재시도한_경우_업데이트_시간만_변경() {
+    MigrationUser user = MigrationUser.agreed(1L);
+    user.progressMigration();
+    user.retry();
+
+    LocalDateTime beforeUpdate = LocalDateTime.now();
+    user.retry();
+    LocalDateTime afterUpdate = LocalDateTime.now();
+
+    assertAll(() -> assertThat(user.getStatus()).isEqualTo(MigrationUserStatus.RETRIED),
+        () -> assertThat(user.getUpdateAt()).isAfter(beforeUpdate).isBefore(afterUpdate),
+        () -> assertThat(user.getPrevStatus()).isEqualTo(MigrationUserStatus.USER_FINISHED));
+  }
 }
