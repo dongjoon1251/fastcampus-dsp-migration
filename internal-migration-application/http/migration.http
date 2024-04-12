@@ -7,3 +7,7 @@ Content-Type: application/json
   "aggregateId": 3,
   "aggregateType": "KEYWORD"
 }
+
+### 진행상황 확인
+GET http://localhost:8082/migration/v1/progress
+Content-Type: application/json
