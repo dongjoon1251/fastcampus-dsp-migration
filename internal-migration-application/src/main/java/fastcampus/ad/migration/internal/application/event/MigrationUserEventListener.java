@@ -1,6 +1,7 @@
 package fastcampus.ad.migration.internal.application.event;
 
 import fastcampus.ad.migration.domain.migration.user.MigrationAgreedEvent;
+import fastcampus.ad.migration.domain.migration.user.MigrationRetriedEvent;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.stream.function.StreamBridge;
@@ -25,6 +26,11 @@ public class MigrationUserEventListener {
     streamBridge.send(OUTPUT_BINDING,
         MessageBuilder.createMessage(message,
             new MessageHeaders(Map.of("partitionKey", userId))));
+  }
+
+  @TransactionalEventListener
+  public void handleRetriedEvent(MigrationRetriedEvent event) {
+    sendMigrationUserMessage(MigrationUserMessage.from(event), event.getUserId());
   }
 
 }

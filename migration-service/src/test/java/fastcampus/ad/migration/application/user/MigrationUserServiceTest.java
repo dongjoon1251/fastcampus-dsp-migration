@@ -86,9 +86,9 @@ class MigrationUserServiceTest {
     when(repository.findById(1L)).thenReturn(Optional.of(MigrationUser.agreed(1L)));
     when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-    MigrationUser user = service.startMigration(1L);
+    MigrationUserResult result = service.startMigration(1L);
 
-    assertThat(user.getStatus()).isEqualTo(MigrationUserStatus.USER_FINISHED);
+    assertThat(result.status()).isEqualTo(MigrationUserStatus.USER_FINISHED);
   }
 
   @Test
@@ -104,8 +104,9 @@ class MigrationUserServiceTest {
     when(repository.findById(1L)).thenReturn(Optional.of(MigrationUser.agreed(1L)));
     when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
-    MigrationUser user = service.progressMigration(1L);
+    MigrationUserResult result = service.progressMigration(1L);
 
-    assertThat(user.getStatus()).isEqualTo(MigrationUserStatus.USER_FINISHED);
+    assertAll(() -> assertThat(result.status()).isEqualTo(MigrationUserStatus.USER_FINISHED),
+        () -> assertThat(result.prevStatus()).isEqualTo(MigrationUserStatus.AGREED));
   }
 }

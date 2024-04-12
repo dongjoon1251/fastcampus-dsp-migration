@@ -4,7 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +21,7 @@ public class MigrationUser extends AbstractAggregateRoot<MigrationUser> {
   private MigrationUserStatus status;
   private LocalDateTime agreedAt;
   private LocalDateTime updateAt;
-  @Transient
+  @Enumerated(EnumType.STRING)
   private MigrationUserStatus prevStatus;
 
   private MigrationUser(Long id, LocalDateTime agreedAt) {
@@ -38,9 +37,20 @@ public class MigrationUser extends AbstractAggregateRoot<MigrationUser> {
   }
 
   public void progressMigration() {
-    prevStatus = status;
-    status = status.next();
+    if (MigrationUserStatus.RETRIED.equals(status)) {
+      status = prevStatus.next();
+    } else {
+      prevStatus = status;
+      status = status.next();
+    }
     updateAt = LocalDateTime.now();
     registerEvent(new MigrationProgressedEvent(this));
+  }
+
+  public void retry() {
+    prevStatus = status;
+    status = MigrationUserStatus.RETRIED;
+    updateAt = LocalDateTime.now();
+    registerEvent(new MigrationRetriedEvent(this));
   }
 }

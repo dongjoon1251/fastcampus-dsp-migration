@@ -31,7 +31,7 @@ public class MigrationEventListener {
     log.info("migration progressed event listener: {}", event.toString());
     streamBridge.send(MIGRATION_USER_OUT,
         MessageBuilder.createMessage(
-            new MigrationUserMessage(event.getUserId(), event.getStatus()),
+            new MigrationUserMessage(event.getUserId(), event.getStatus(), event.getPrevStatus()),
             header(event.getUserId())));
   }
 

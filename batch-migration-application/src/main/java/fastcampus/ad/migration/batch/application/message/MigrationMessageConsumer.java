@@ -16,7 +16,7 @@ public class MigrationMessageConsumer {
   @Bean
   public Consumer<MigrationUserMessage> migrationUserConsumer() {
     return message -> {
-      processor.progressMigration(message.status(), message.userId());
+      processor.progressMigration(message.prevStatus(), message.status(), message.userId());
       log.info("migration user consumer: {}", message);
     };
   }

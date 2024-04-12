@@ -17,6 +17,16 @@ public class MigrationMessageProcessor {
   private final MigrationUserService migrationUserService;
   private final PageMigrationDispatcher pageMigrationDispatcher;
 
+  public void progressMigration(MigrationUserStatus prevStatus, MigrationUserStatus status,
+      Long userId) {
+    switch (status) {
+      case RETRIED -> progressMigration(prevStatus, userId);
+      case AGREED, USER_FINISHED, ADGROUP_FINISHED, KEYWORD_FINISHED ->
+          progressMigration(status, userId);
+      default -> log.info("userId: {}, status: {}, prevStatus: {}", userId, status, prevStatus);
+    }
+  }
+
   public void progressMigration(MigrationUserStatus status, Long userId) {
     switch (status) {
       case AGREED -> startMigration(userId);

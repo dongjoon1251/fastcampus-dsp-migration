@@ -6,3 +6,7 @@ Content-Type: application/json
 ### 마이그레이션에 동의한 사용자 조회
 GET http://localhost:8082/migration/v1/user/1
 Content-Type: application/json
+
+### 배치성 마이그레이션 재시도
+PUT http://localhost:8082/migration/v1/user/1/retry
+Content-Type: application/json

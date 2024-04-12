@@ -1,6 +1,7 @@
 package fastcampus.ad.migration.domain.migration.user;
 
 public enum MigrationUserStatus {
+  RETRIED(),
   GRADUALLY_UPDATING(),
   KEYWORD_FINISHED(GRADUALLY_UPDATING),
   ADGROUP_FINISHED(KEYWORD_FINISHED),
@@ -17,6 +18,9 @@ public enum MigrationUserStatus {
   }
 
   public MigrationUserStatus next() {
+    if (this.equals(RETRIED)) {
+      throw new RetriedNeedPrevStatusForNextException();
+    }
     return nextStatus;
   }
 }
