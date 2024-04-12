@@ -8,7 +8,7 @@ spring:
       properties:
         hibernate:
           hbm2ddl.auto: validate
-          show_sql: true
+          show_sql: false
           physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
     recent-ad:
       hikari:
@@ -18,5 +18,5 @@ spring:
       properties:
         hibernate:
           hbm2ddl.auto: update
-          show_sql: true
+          show_sql: false
           physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy

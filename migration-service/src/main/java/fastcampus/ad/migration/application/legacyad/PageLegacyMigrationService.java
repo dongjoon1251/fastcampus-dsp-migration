@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public abstract class PageLegacyMigrationService<P extends PageMigration<P>, Legacy extends DeletableEntity, Recent extends MigratedEntity> {
 
-  public final static Integer PAGE_SIZE = 1;
+  public final static Integer PAGE_SIZE = 1000;
   protected final PageMigrationRepository<P> pageMigrationRepository;
   protected final LegacyPageableRepository<Legacy> legacyPageableRepository;
   protected final LegacyMigrationService<Legacy, Recent> legacyMigrationService;

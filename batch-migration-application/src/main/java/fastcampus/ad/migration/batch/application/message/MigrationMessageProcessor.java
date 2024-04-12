@@ -7,6 +7,7 @@ import fastcampus.ad.migration.domain.AggregateType;
 import fastcampus.ad.migration.domain.migration.user.MigrationUserStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -17,6 +18,7 @@ public class MigrationMessageProcessor {
   private final MigrationUserService migrationUserService;
   private final PageMigrationDispatcher pageMigrationDispatcher;
 
+  @Async
   public void progressMigration(MigrationUserStatus prevStatus, MigrationUserStatus status,
       Long userId) {
     switch (status) {
@@ -44,6 +46,7 @@ public class MigrationMessageProcessor {
     }
   }
 
+  @Async
   public void processPageMigration(Long userId, AggregateType aggregateType, boolean isFinished) {
     if (isFinished) {
       migrationUserService.progressMigration(userId);

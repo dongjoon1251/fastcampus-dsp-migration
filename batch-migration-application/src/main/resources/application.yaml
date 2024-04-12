@@ -6,10 +6,10 @@ spring:
   jpa:
     legacy-ad:
       hikari:
-        maximum-pool-size: 100
+        maximum-pool-size: 600
     recent-ad:
       hikari:
-        maximum-pool-size: 100
+        maximum-pool-size: 600
   cloud:
     function:
       definition: migrationUserConsumer;pageMigrationConsumer
@@ -60,6 +60,13 @@ spring:
           binder: migration-kafka
           destination: page-migration-topic
           group: batch-migration
+  task:
+    execution:
+      pool:
+        core-size: 300
+        max-size: 300
+        queue-capacity: 1000
+        keep-alive: 30s
 logging:
   file:
     name: logs/batch.log
