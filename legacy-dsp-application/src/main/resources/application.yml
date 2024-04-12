@@ -5,7 +5,7 @@ spring:
         jdbc-url: jdbc:mysql://localhost:3309/legacy-ad
         username: root
         password: localpw
-        maximum-pool-size: 100
+        maximum-pool-size: 800
       properties:
         hibernate:
           hbm2ddl.auto: update
