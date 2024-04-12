@@ -1,4 +1,5 @@
 rootProject.name = 'fastcampus-dsp-migration'
 include 'legacy-dsp-application'
 include 'gradual-migration-application'
+include 'migration-service'
 
