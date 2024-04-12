@@ -20,3 +20,6 @@ spring:
           hbm2ddl.auto: update
           show_sql: false
           physical_naming_strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+          jdbc.batch_size: 300
+          order_inserts: true
+          order_updates: true
