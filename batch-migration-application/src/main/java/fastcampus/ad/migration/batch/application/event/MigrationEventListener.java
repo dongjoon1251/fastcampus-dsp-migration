@@ -1,6 +1,8 @@
 package fastcampus.ad.migration.batch.application.event;
 
 import fastcampus.ad.migration.batch.application.message.MigrationUserMessage;
+import fastcampus.ad.migration.batch.application.message.PageMigrationMessage;
+import fastcampus.ad.migration.domain.migration.PageMigrationEvent;
 import fastcampus.ad.migration.domain.migration.user.MigrationProgressedEvent;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,8 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class MigrationEventListener {
 
   private static final String MIGRATION_USER_OUT = "migration-user-out";
+  private static final String PAGE_MIGRATION_OUT = "page-migration-out";
+
   private static final String PARTITION_KEY = "partitionKey";
 
   private final StreamBridge streamBridge;
@@ -35,4 +39,11 @@ public class MigrationEventListener {
     return new MessageHeaders(Map.of(PARTITION_KEY, id));
   }
 
+  @TransactionalEventListener
+  public void handlePageMigrationEvent(PageMigrationEvent event) {
+    log.info("page migration event listener: {}", event.toString());
+    streamBridge.send(PAGE_MIGRATION_OUT, MessageBuilder.createMessage(
+        new PageMigrationMessage(event.userId(), event.aggregateType(), event.isFinished()),
+        header(event.userId())));
+  }
 }

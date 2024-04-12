@@ -17,8 +17,16 @@ public class MigrationMessageConsumer {
   public Consumer<MigrationUserMessage> migrationUserConsumer() {
     return message -> {
       processor.progressMigration(message.status(), message.userId());
-      log.info("migration user consumer: {}", message.toString());
+      log.info("migration user consumer: {}", message);
     };
   }
 
+  @Bean
+  public Consumer<PageMigrationMessage> pageMigrationConsumer() {
+    return message -> {
+      processor.processPageMigration(message.userId(), message.aggregateType(),
+          message.isFinished());
+      log.info("page migration consumer: {}", message);
+    };
+  }
 }

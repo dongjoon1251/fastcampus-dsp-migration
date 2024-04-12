@@ -1,9 +1,10 @@
 package fastcampus.ad.migration.domain.legacyad.keyword;
 
-import org.springframework.data.repository.CrudRepository;
+import fastcampus.ad.migration.domain.legacyad.LegacyPageableRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LegacyKeywordRepository extends CrudRepository<LegacyKeyword, Long> {
+public interface LegacyKeywordRepository extends LegacyPageableRepository<LegacyKeyword> {
+
 
 }
