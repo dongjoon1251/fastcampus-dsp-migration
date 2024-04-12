@@ -17,6 +17,9 @@ spring:
           migrationUserConsumer-in-0:
             consumer:
               startOffset: latest
+          migration-user-out:
+            producer:
+              sync: true
       binders:
         migration-kafka:
           type: kafka
@@ -33,6 +36,12 @@ spring:
           binder: migration-kafka
           destination: migration-user-topic
           group: batch-migration
+        migration-user-out:
+          binder: migration-kafka
+          destination: migration-user-topic
+          producer:
+            partition-key-expression: headers['partitionKey']
+            partition-count: 4
 
 logging:
   file:

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+import fastcampus.ad.migration.application.legacyad.user.LegacyUserMigrationService;
 import fastcampus.ad.migration.domain.migration.user.MigrationUser;
 import fastcampus.ad.migration.domain.migration.user.MigrationUserRepository;
 import fastcampus.ad.migration.domain.migration.user.MigrationUserStatus;
@@ -21,6 +22,8 @@ class MigrationUserServiceTest {
 
   @Mock
   MigrationUserRepository repository;
+  @Mock
+  LegacyUserMigrationService legacyUserMigrationService;
 
   @InjectMocks
   MigrationUserService service;
@@ -75,5 +78,34 @@ class MigrationUserServiceTest {
     boolean result = service.isDisagreed(1L);
 
     assertThat(result).isFalse();
+  }
+
+  @Test
+  void 마이그레이션_시작하고_사용자_마이그레이션_성공하면_상태_업데이트() throws StartMigrationFailedException {
+    when(legacyUserMigrationService.migrate(1L)).thenReturn(true);
+    when(repository.findById(1L)).thenReturn(Optional.of(MigrationUser.agreed(1L)));
+    when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+
+    MigrationUser user = service.startMigration(1L);
+
+    assertThat(user.getStatus()).isEqualTo(MigrationUserStatus.USER_FINISHED);
+  }
+
+  @Test
+  void 마이그레이션_시작하고_사용자_마이그레이션_실패하면_에러() {
+    when(legacyUserMigrationService.migrate(1L)).thenReturn(false);
+
+    assertThatThrownBy(() -> service.startMigration(1L))
+        .isInstanceOf(StartMigrationFailedException.class);
+  }
+
+  @Test
+  void 마이그레이션_진행하면_사용자_상태_업데이트() {
+    when(repository.findById(1L)).thenReturn(Optional.of(MigrationUser.agreed(1L)));
+    when(repository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+
+    MigrationUser user = service.progressMigration(1L);
+
+    assertThat(user.getStatus()).isEqualTo(MigrationUserStatus.USER_FINISHED);
   }
 }
