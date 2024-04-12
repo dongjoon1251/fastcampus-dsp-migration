@@ -6,10 +6,10 @@ spring:
   jpa:
     legacy-ad:
       hikari:
-        maximum-pool-size: 100
+        maximum-pool-size: 50
     recent-ad:
       hikari:
-        maximum-pool-size: 100
+        maximum-pool-size: 50
   cloud:
     stream:
       binders:

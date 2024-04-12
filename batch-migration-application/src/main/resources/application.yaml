@@ -6,10 +6,10 @@ spring:
   jpa:
     legacy-ad:
       hikari:
-        maximum-pool-size: 600
+        maximum-pool-size: 400
     recent-ad:
       hikari:
-        maximum-pool-size: 600
+        maximum-pool-size: 400
   cloud:
     function:
       definition: migrationUserConsumer;pageMigrationConsumer
@@ -63,8 +63,8 @@ spring:
   task:
     execution:
       pool:
-        core-size: 300
-        max-size: 300
+        core-size: 200
+        max-size: 200
         queue-capacity: 1000
         keep-alive: 30s
 logging:
